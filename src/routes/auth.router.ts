@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { AuthController } from "../controllers/auth.controller";
+import AuthController from "../controllers/auth.controller";
 
 
 const authRouter = express.Router();

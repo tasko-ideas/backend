@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken'
 
 import userModel, { IUser } from "../models/user.model";
 import { jwtSecret } from "../config/environment";
-import { AuthHelper } from "../helpers/auth.helper";
+import AuthHelper from "../helpers/auth.helper";
 
-export namespace AuthController {
+const AuthController = {
 
-  export const register = async (req: any, res: Response) => {
+  register: async (req: any, res: Response) => {
     try {
       const { fullname, email, password, passwordCheck } = req.body;
       const user = new userModel({
@@ -37,9 +37,9 @@ export namespace AuthController {
     } catch (error: any) {
       return res.status(403).json(error.message);
     }
-  };
+  },
 
-  export const login = async (req: Request, res: Response) => {
+  login: async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body;
 
@@ -60,6 +60,8 @@ export namespace AuthController {
 
       return res.status(403).json(error);
     }
-  };
+  },
 
 }
+
+export default AuthController
