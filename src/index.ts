@@ -9,7 +9,7 @@ import authRouter from './routes/auth.router'
 import calendarRouter from './routes/calendar.router'
 import projectRouter from './routes/project.router'
 
-import { PORT, staticsfiles } from './config/environment'
+import { PORT } from './config/environment'
 import tasksRouter from './routes/task.router'
 
 const app = express()
@@ -22,7 +22,6 @@ app.use(morgan('dev'))
 app.use(cors())
 
 // ---------------- Routes
-app.use('/api/doc', express.static(staticsfiles))
 app.use('/api', calendarRouter)
 app.use('/api', authRouter)
 app.use('/api', tasksRouter)

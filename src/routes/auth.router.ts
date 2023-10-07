@@ -18,4 +18,8 @@ authRouter.post(
     AuthController.register(req, res);
   });
 
+
+
+
+
 export default authRouter;

@@ -12,22 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCalendarItemById = void 0;
 const calendarItem_model_1 = __importDefault(require("../models/calendarItem.model"));
-const getCalendarItemById = (listOfItems) => __awaiter(void 0, void 0, void 0, function* () {
-    const items = []; // Inicializamos el array
-    try {
-        for (const itemId of listOfItems) {
-            const calendarItem = yield calendarItem_model_1.default.findById(itemId);
-            if (calendarItem) {
-                items.push(calendarItem);
+const CalendarHelper = {
+    getCalendarItemById: (listOfItems) => __awaiter(void 0, void 0, void 0, function* () {
+        const items = []; // Inicializamos el array
+        try {
+            for (const itemId of listOfItems) {
+                const calendarItem = yield calendarItem_model_1.default.findById(itemId);
+                if (calendarItem) {
+                    items.push(calendarItem);
+                }
             }
+            return items;
         }
-        return items;
-    }
-    catch (error) {
-        console.log(error);
-        return [];
-    }
-});
-exports.getCalendarItemById = getCalendarItemById;
+        catch (error) {
+            console.log(error);
+            return [];
+        }
+    }),
+};
+exports.default = CalendarHelper;

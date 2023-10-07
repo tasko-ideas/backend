@@ -22,7 +22,6 @@ app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
 app.use((0, cors_1.default)());
 // ---------------- Routes
-app.use('/api/doc', express_1.default.static(environment_1.staticsfiles));
 app.use('/api', calendar_router_1.default);
 app.use('/api', auth_router_1.default);
 app.use('/api', task_router_1.default);

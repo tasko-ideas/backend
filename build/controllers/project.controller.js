@@ -12,13 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProjectController = void 0;
 const project_model_1 = __importDefault(require("../models/project.model"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const task_model_1 = __importDefault(require("../models/task.model"));
-var ProjectController;
-(function (ProjectController) {
-    ProjectController.createProject = (req, res) => __awaiter(this, void 0, void 0, function* () {
+const ProjectController = {
+    createProject: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { name, description } = req.body;
             const user = yield user_model_1.default.findOne({ _id: req.user });
@@ -43,8 +41,8 @@ var ProjectController;
         catch (error) {
             return res.status(500).json("Error Internal Server!");
         }
-    });
-    ProjectController.getProjects = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    getProjects: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const user = yield user_model_1.default.findOne({ _id: req.user });
             if (!user) {
@@ -61,8 +59,8 @@ var ProjectController;
         catch (error) {
             return res.status(500).json("Error Internal Server!");
         }
-    });
-    ProjectController.createBoard = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    createBoard: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { projectId, boardName } = req.body;
             const project = yield project_model_1.default.findOne({ _id: projectId });
@@ -81,8 +79,8 @@ var ProjectController;
         catch (error) {
             return res.status(500).json("Error Internal Server!");
         }
-    });
-    ProjectController.addColumn = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    addColumn: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { projectId, boardName, columnName } = req.body;
             const project = yield project_model_1.default.findOne({ _id: projectId });
@@ -100,8 +98,8 @@ var ProjectController;
         catch (error) {
             return res.status(500).json("Error Internal Server!");
         }
-    });
-    ProjectController.addTask = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    addTask: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { projectId, boardName, columnName, taskId } = req.body;
             const project = yield project_model_1.default.findOne({ _id: projectId });
@@ -121,6 +119,6 @@ var ProjectController;
         catch (error) {
             return res.status(500).json("Internal Server Error");
         }
-    });
-})(ProjectController || (exports.ProjectController = ProjectController = {}));
-;
+    }),
+};
+exports.default = ProjectController;

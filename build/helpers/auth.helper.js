@@ -12,15 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthHelper = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 const form_data_1 = __importDefault(require("form-data"));
 const axios_1 = __importDefault(require("axios"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const environment_1 = require("../config/environment");
-var AuthHelper;
-(function (AuthHelper) {
-    AuthHelper.uploadImage = (file) => __awaiter(this, void 0, void 0, function* () {
+const AuthHelper = {
+    uploadImage: (file) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             if (!AuthHelper.validateImage(file)) {
                 return null;
@@ -41,8 +39,8 @@ var AuthHelper;
             console.error('Imgur Error:', imgurError);
             return null;
         }
-    });
-    AuthHelper.validateImage = (imageFile) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    validateImage: (imageFile) => __awaiter(void 0, void 0, void 0, function* () {
         if (!imageFile || !imageFile.mimetype.startsWith('image/')) {
             return false;
         }
@@ -52,8 +50,8 @@ var AuthHelper;
             return false;
         }
         return true;
-    });
-    AuthHelper.calendarItemSave = (userId) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    calendarItemSave: (userId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const user = yield user_model_1.default.findById(userId);
             if (!user) {
@@ -82,5 +80,6 @@ var AuthHelper;
             console.log(error);
             return null;
         }
-    });
-})(AuthHelper || (exports.AuthHelper = AuthHelper = {}));
+    }),
+};
+exports.default = AuthHelper;
