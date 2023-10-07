@@ -26,7 +26,7 @@ tasksRouter.put(
 );
 
 tasksRouter.post(
-  "/tasks/getTask",
+  "/tasks/get-task",
   TaskController.getTask
 )
 
