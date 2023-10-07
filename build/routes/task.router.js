@@ -16,4 +16,5 @@ tasksRouter.put("/tasks/:id", passport_1.default.authenticate('jwt', { session: 
 tasksRouter.put("/tasks/addMember/:id", passport_1.default.authenticate('jwt', { session: false }), (req, res) => {
     task_controller_1.default.addMember(req, res);
 });
+tasksRouter.post("/tasks/get-task", task_controller_1.default.getTask);
 exports.default = tasksRouter;

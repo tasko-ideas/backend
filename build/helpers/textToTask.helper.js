@@ -8,35 +8,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const chatgpt_1 = require("chatgpt");
 const environment_1 = require("../config/environment");
-const chatGpt = new chatgpt_1.ChatGPTAPI({
-    apiKey: environment_1.gptApiKey,
-});
+const axios_1 = __importDefault(require("axios"));
 const GptHelper = {
     textToTask: (text) => __awaiter(void 0, void 0, void 0, function* () {
         if (!text) {
             return null;
         }
-        const prompt = "Genera un comando SQL para registrar una tarea en la tabla ‘calendario’ (descricion, fecha + hora) a partir del siguiente texto. Si no puedes determinar una única tarea, genera múltiples comandos SQL. Solo quiero el comando SQL en tu respuesta. Este es el texto:" + text;
-        const apiRequestBody = {
+        const alctualdate = new Date();
+        const chatGptResponse = yield axios_1.default.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-3.5-turbo',
             messages: [
                 {
-                    role: "system",
-                    content: "Eres un experto en SQL"
+                    role: 'system',
+                    content: `SQL para registrar tarea en tabla calendario unicamenete 2 campos: "descricion+persona" y "fecha+hora" a partir del siguiente texto. considerando que hoy es ${alctualdate}si no puedes determinar una única tarea, genera múltiples comandos SQL. Solo SQL en tu respuesta.`
+                    //content: `Genera comando SQL para registrar campos:descripcion, fecha+hora usando ${alctualdate} y persona con la tarea.`
                 },
                 {
-                    role: "user",
-                    content: prompt
+                    role: 'user',
+                    content: text
                 }
-            ],
-            temperature: 0,
-        };
-        const chatGptResponse = yield chatGpt.sendMessage(apiRequestBody);
-        console.log(chatGptResponse);
-        return 'yu';
+            ]
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${environment_1.gptApiKey}`,
+            }
+        });
+        const expresion = /'([^']+)'/g;
+        const data = [];
+        let match;
+        while ((match = expresion.exec(chatGptResponse.data.choices[0].message.content)) !== null) {
+            data.push(match[1]);
+        }
+        return data;
     })
 };
 exports.default = GptHelper;
