@@ -1,5 +1,5 @@
 import express from "express";
-import { ProjectController } from "../controllers/project.controller";
+import ProjectController from "../controllers/project.controller";
 import passport from "passport";
 
 const projectRouter = express.Router();

@@ -3,9 +3,9 @@ import projectModel from "../models/project.model";
 import userModel from "../models/user.model";
 import taskModel from "../models/task.model";
 
-export namespace ProjectController {
+const ProjectController = {
 
-  export const createProject = async (req: Request, res: Response) => {
+  createProject: async (req: Request, res: Response) => {
     try {
       const { name, description } = req.body;
       const user = await userModel.findOne({ _id: req.user });
@@ -30,9 +30,9 @@ export namespace ProjectController {
     } catch (error) {
       return res.status(500).json("Error Internal Server!");
     }
-  }
+  },
 
-  export const getProjects = async (req: Request, res: Response) => {
+  getProjects: async (req: Request, res: Response) => {
     try {
       const user = await userModel.findOne({ _id: req.user });
       if (!user) {
@@ -49,9 +49,9 @@ export namespace ProjectController {
     } catch (error) {
       return res.status(500).json("Error Internal Server!");
     }
-  }
+  },
 
-  export const createBoard = async (req: Request, res: Response) => {
+  createBoard: async (req: Request, res: Response) => {
     try {
       const { projectId, boardName } = req.body;
       const project = await projectModel.findOne({ _id: projectId });
@@ -70,9 +70,9 @@ export namespace ProjectController {
     } catch (error) {
       return res.status(500).json("Error Internal Server!");
     }
-  }
+  },
 
-  export const addColumn = async (req: Request, res: Response) => {
+  addColumn: async (req: Request, res: Response) => {
     try {
       const { projectId, boardName, columnName } = req.body;
       const project = await projectModel.findOne({ _id: projectId });
@@ -92,9 +92,9 @@ export namespace ProjectController {
     } catch (error) {
       return res.status(500).json("Error Internal Server!");
     }
-  }
+  },
 
-  export const addTask = async (req: Request, res: Response) => {
+  addTask: async (req: Request, res: Response) => {
     try {
       const { projectId, boardName, columnName, taskId } = req.body;
       const project = await projectModel.findOne({ _id: projectId });
@@ -117,6 +117,8 @@ export namespace ProjectController {
     } catch (error) {
       return res.status(500).json("Internal Server Error");
     }
-  };
+  },
 
 };
+
+export default ProjectController;

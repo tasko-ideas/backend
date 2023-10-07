@@ -1,6 +1,6 @@
 //import projectModel from "../models/projectModel";
 
-export namespace ProjectHelper {
+const ProjectHelper = {
   /*
     export const isInProject = async (userId: string, projectId: string, type: string): Promise<boolean> => {
       const project = await projectModel.findOne({ _id: projectId });
@@ -18,3 +18,5 @@ export namespace ProjectHelper {
   
   */
 }
+
+export default ProjectHelper

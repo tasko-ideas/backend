@@ -7,11 +7,11 @@ import { Schema } from "mongoose";
 import { imgurClientId } from "../config/environment";
 
 
-export namespace AuthHelper {
+const AuthHelper = {
 
-  export const uploadImage = async (file: any): Promise<string | null> => {
+  uploadImage: async (file: any): Promise<string | null> => {
     try {
-      if (!validateImage(file)) {
+      if (!AuthHelper.validateImage(file)) {
         return null;
       }
       const data = new FormData();
@@ -32,9 +32,9 @@ export namespace AuthHelper {
       console.error('Imgur Error:', imgurError);
       return null
     }
-  }
+  },
 
-  export const validateImage = async (imageFile: any): Promise<boolean> => {
+  validateImage: async (imageFile: any): Promise<boolean> => {
     if (!imageFile || !imageFile.mimetype.startsWith('image/')) {
       return false
     }
@@ -44,10 +44,9 @@ export namespace AuthHelper {
       return false
     }
     return true;
-  }
+  },
 
-
-  export const calendarItemSave = async (
+  calendarItemSave: async (
     userId: Schema.Types.ObjectId,
     //calendarItemId: mongoose.Types.ObjectId,
     //savedTaskId: mongoose.Types.ObjectId,
@@ -82,5 +81,8 @@ export namespace AuthHelper {
       console.log(error);
       return null;
     }
-  };
+  },
+
 }
+
+export default AuthHelper
