@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import userModel from "../models/user.model";
 import taskModel from "../models/task.model";
+import GptHelper from "../helpers/textToTask.helper";
 
 const TaskController = {
 
@@ -96,6 +97,16 @@ const TaskController = {
       return res.status(500).json(error);
     }
   },
+
+  getTask: async (req: Request, res: Response) => {
+    try {
+      const prompt = req.body.prompt;
+      const response = await GptHelper.textToTask(prompt);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
 
 }
 

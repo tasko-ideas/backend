@@ -62,6 +62,20 @@ const AuthController = {
     }
   },
 
+
+  delete: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const user = await userModel.findByIdAndDelete({ _id: id });
+      if (!user) {
+        return res.status(400).json({ message: "User not found" });
+      }
+      return res.status(200).json({ message: "User deleted successfully" });
+    } catch {
+      return res.status(500).json("Error Internal Server!");
+    }
+  },
+
 }
 
 export default AuthController

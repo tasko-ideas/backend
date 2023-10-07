@@ -12,14 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const environment_1 = require("../config/environment");
-const auth_helper_1 = require("../helpers/auth.helper");
-var AuthController;
-(function (AuthController) {
-    AuthController.register = (req, res) => __awaiter(this, void 0, void 0, function* () {
+const auth_helper_1 = __importDefault(require("../helpers/auth.helper"));
+const AuthController = {
+    register: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { fullname, email, password, passwordCheck } = req.body;
             const user = new user_model_1.default({
@@ -30,7 +28,7 @@ var AuthController;
             });
             // Add profile image to imgur <---- arreglar logica para que guarde usuario aunque no haya podido subir imagen
             if (req.files) {
-                const uploadImage = yield auth_helper_1.AuthHelper.uploadImage(req.files[0]);
+                const uploadImage = yield auth_helper_1.default.uploadImage(req.files[0]);
                 if (!uploadImage) {
                     return res.status(500).json({ error: "Error al subir la imagen a Imgur." });
                 }
@@ -47,8 +45,8 @@ var AuthController;
         catch (error) {
             return res.status(403).json(error.message);
         }
-    });
-    AuthController.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }),
+    login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { email, password } = req.body;
             const user = yield user_model_1.default.findOne({ email });
@@ -66,5 +64,19 @@ var AuthController;
         catch (error) {
             return res.status(403).json(error);
         }
-    });
-})(AuthController || (exports.AuthController = AuthController = {}));
+    }),
+    delete: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const { id } = req.params;
+            const user = yield user_model_1.default.findByIdAndDelete({ _id: id });
+            if (!user) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            return res.status(200).json({ message: "User deleted successfully" });
+        }
+        catch (_a) {
+            return res.status(500).json("Error Internal Server!");
+        }
+    }),
+};
+exports.default = AuthController;
