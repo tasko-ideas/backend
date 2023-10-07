@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../models/user.model"));
 const task_model_1 = __importDefault(require("../models/task.model"));
+const textToTask_helper_1 = __importDefault(require("../helpers/textToTask.helper"));
 const TaskController = {
     createTask: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -108,5 +109,15 @@ const TaskController = {
             return res.status(500).json(error);
         }
     }),
+    getTask: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const prompt = req.body.prompt;
+            const response = yield textToTask_helper_1.default.textToTask(prompt);
+            return res.status(200).json(response);
+        }
+        catch (error) {
+            return res.status(500).json(error);
+        }
+    })
 };
 exports.default = TaskController;
